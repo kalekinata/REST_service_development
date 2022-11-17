@@ -1,0 +1,15 @@
+com\example\LR1\Admins.class
+com\example\LR1\Chat.class
+com\example\LR1\Group.class
+com\example\LR1\Type.class
+com\example\LR1\Message.class
+com\example\LR1\Person.class
+com\example\LR1\Sender.class
+com\example\LR1\Receivers.class
+com\example\LR1\Lr1Application.class
+com\example\LR1\SystemXML.class
+com\example\LR1\PersonList.class
+com\example\LR1\Content.class
+com\example\LR1\MessageList.class
+com\example\LR1\ChatHistory.class
+com\example\LR1\APrivate.class

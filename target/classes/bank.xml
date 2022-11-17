@@ -1,0 +1,113 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<tranQueue
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://namespaceTest.com/tranQueue"
+        xsi:schemaLocation="src/main/resources/trans_queue.xsd"
+>
+    <client_list>
+        <client clid="id_4D01AF61-5817-4F0A-8357-4CF902EA4234">
+            <cl_dadd>2022-01-08T11:34:55.670</cl_dadd>
+            <cl_name>Иванов Пётр Васильевич</cl_name>
+            <client_type>
+                <cltp_name>PF</cltp_name>
+                <cltp_desc>Физическое лицо</cltp_desc>
+            </client_type>
+            <client_param>
+                <param>
+                    <p_name>inn</p_name>
+                    <p_value>918273526178</p_value>
+                </param>
+            </client_param>
+            <client_requiset>
+                <req>
+                    <req_name>bic</req_name>
+                    <req_value>918273647</req_value>
+                </req>
+                <req>
+                    <req_name>req</req_name>
+                    <req_value>91827364728372635473</req_value>
+                </req>
+            </client_requiset>
+            <document image="pasp"/>
+            <cl_status param="A"/>
+            <acc_list>
+                <account accid="id_B9599464-A973-4926-913D-344EF3A7B330">
+                    <acc_dadd>2022-01-08T11:35:56.683</acc_dadd>
+                    <ac_type>
+                        <actp_name>DEF</actp_name>
+                        <actp_desc>Основной счёт</actp_desc>
+                        <a_p>P</a_p>
+                    </ac_type>
+                    <acc_clid clid="id_4D01AF61-5817-4F0A-8357-4CF902EA4234"/>
+                    <balance>20304.27</balance>
+                    <balance_free>20304.27</balance_free>
+                    <hold>0.00</hold>
+                </account>
+                <account accid="id_A9599464-A973-4926-913D-344EF3A7B330">
+                    <acc_dadd>2022-01-20T18:47:46.683</acc_dadd>
+                    <ac_type>
+                        <actp_name>CRD</actp_name>
+                        <actp_desc>Счёт овердрафт</actp_desc>
+                        <a_p>A</a_p>
+                    </ac_type>
+                    <acc_clid clid="id_4D01AF61-5817-4F0A-8357-4CF902EA4234"/>
+                    <balance>304.27</balance>
+                    <balance_free>304.27</balance_free>
+                    <hold>0.00</hold>
+                </account>
+            </acc_list>
+        </client>
+        <client clid="id_8D285579-2DB7-4D1B-94F7-7726A7FAE7E6">
+            <cl_dadd>2021-12-07T11:34:55.670</cl_dadd>
+            <cl_name>Цветков Василий Александрович</cl_name>
+            <client_type>
+                <cltp_name>PF</cltp_name>
+                <cltp_desc>Физическое лицо</cltp_desc>
+            </client_type>
+            <client_param>
+                <param>
+                    <p_name>inn</p_name>
+                    <p_value>918000026158</p_value>
+                </param>
+            </client_param>
+            <client_requiset>
+                <req>
+                    <req_name>bic</req_name>
+                    <req_value>982736425</req_value>
+                </req>
+            </client_requiset>
+            <document image="pasp"/>
+            <cl_status param='Y'/>
+            <acc_list>
+                <account accid="id_869B0913-CBFB-4D1D-91EE-0DF74005C792">
+                    <acc_dadd>2021-12-07T11:35:46.683</acc_dadd>
+                    <ac_type>
+                        <actp_name>DEF</actp_name>
+                        <actp_desc>Основной счёт</actp_desc>
+                        <a_p>P</a_p>
+                    </ac_type>
+                    <acc_clid clid="id_8D285579-2DB7-4D1B-94F7-7726A7FAE7E6"/>
+                    <balance>3721.25</balance>
+                    <balance_free>2411.23</balance_free>
+                    <hold>1310.02</hold>
+                </account>
+            </acc_list>
+        </client>
+    </client_list>
+    <transactions>
+        <transaction tranid="19EC8669-EFB3-4EE8-993C-CA63546702AE">
+            <tran_dadd>2022-02-20T12:54:34.843</tran_dadd>
+            <tran_type>
+                <trtp_name>transfer</trtp_name>
+                <trtp_desc>Перевод денежных средств</trtp_desc>
+            </tran_type>
+            <acc_sender accids="id_B9599464-A973-4926-913D-344EF3A7B330"/>
+            <acc_recip accidr="id_A9599464-A973-4926-913D-344EF3A7B330"/>
+            <model>
+                <clid>4D01AF61-5817-4F0A-8357-4CF902EA4234</clid>
+                <sum>300.92</sum>
+            </model>
+            <status>success</status>
+        </transaction>
+    </transactions>
+</tranQueue>

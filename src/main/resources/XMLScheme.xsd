@@ -1,0 +1,225 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xs:schema
+        xmlns:tns="http://namespaceTest.com/tranQueue"
+        targetNamespace="http://namespaceTest.com/tranQueue"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified"
+><!--1. Схема должна быть сопоставлено определенное пространство имен, при этом должна быть предусмотрена квалификация элементов, определенных схемой, в документе, построенном на ее основе-->
+    <xs:simpleType name="clParam">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="inn" />
+            <xs:enumeration value="ogrn" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="clReq">
+        <xs:restriction base="xs:string"><!--6. Схема должна демонстрировать возможности описания новых простых типов на базе существующих (в том числе описание перечислимого типа) с использованием не менее трех видов фасетов-->
+            <xs:enumeration value="kpp" />
+            <xs:enumeration value="bic" />
+            <xs:enumeration value="req" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="sumType"><!--5. Схема должна демонстрировать возможность описания нового сложного типа на базе как простого типа, так и сложного как путем расширения, так и путем ограничения-->
+        <xs:restriction base="xs:decimal"><!--6. Схема должна демонстрировать возможности описания новых простых типов на базе существующих (в том числе описание перечислимого типа) с использованием не менее трех видов фасетов-->
+            <xs:fractionDigits value="2" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="statusType"><!--5. Схема должна демонстрировать возможность описания нового сложного типа на базе как простого типа, так и сложного как путем расширения, так и путем ограничения-->
+        <xs:restriction base="xs:string"><!--6. Схема должна демонстрировать возможности описания новых простых типов на базе существующих (в том числе описание перечислимого типа) с использованием не менее трех видов фасетов-->
+            <xs:pattern value="[A-Z]" />
+            <xs:maxLength value="1" />
+        </xs:restriction>
+    </xs:simpleType>
+
+<!--    <xs:element name="users" type="tns:usersType" abstract="true" />&lt;!&ndash;4.Схема должна содержать описание абстрактного сложного типа и элемента этого типа, а пример документа - демонстрировать использование последнего&ndash;&gt;-->
+<!--    <xs:complexType name="usersType" abstract="true">-->
+<!--        <xs:sequence>-->
+<!--            <xs:element name="username" type="xs:string" />-->
+<!--        </xs:sequence>-->
+<!--    </xs:complexType>-->
+
+<!--    <xs:element name="usInfo" substitutionGroup="tns:users">-->
+<!--    <xs:complexType>-->
+<!--        <xs:complexContent>-->
+<!--            <xs:extension base="tns:usersType"> &lt;!&ndash;5. Схема должна демонстрировать возможность описания нового сложного типа на базе как простого типа, так и сложного как путем расширения, так и путем ограничения&ndash;&gt;-->
+<!--                <xs:choice>-->
+<!--                    <xs:element name="usid" type="xs:string" />-->
+<!--                    <xs:element name="rolid" type="xs:string" />-->
+<!--                </xs:choice>-->
+<!--            </xs:extension>-->
+<!--        </xs:complexContent>-->
+<!--    </xs:complexType>-->
+<!--    </xs:element>-->
+
+    <xs:element name="tranQueue" type="tns:tranQueueType"/>
+    <xs:complexType name="tranQueueType">
+        <xs:sequence>
+            <xs:element name="client_list" type="tns:client_ListType" />
+            <xs:element name="transactions" type="tns:transactionsType" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="client_ListType">
+        <xs:sequence>
+            <xs:element name="client" type="tns:clientType" maxOccurs="unbounded">
+                <xs:key name="clid"><!--7. Схема должна содержать описание ограничения уникальности, ключа и ссылки на ключ, применение чего должно иметь смысл в предметной области-->
+                    <xs:selector xpath="client" />
+                    <xs:field xpath="@clid" />
+                </xs:key>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="clientType"> <!--3.Схема должна демонстрировать использование конструкций для описания сложного типа, образованного вложенными элементами и атрибутами;-->
+        <xs:sequence>
+            <xs:element name="cl_dadd" type="xs:dateTime" />
+            <xs:element name="cl_name" type="xs:string" />
+            <xs:choice><!--3. При описании сложных типов необходимо продемонстрировать использование не менее двух видов модельных групп (sequence, choice и all)-->
+                <xs:element name="client_type">
+                    <xs:complexType>
+                        <xs:all> <!--3. При описании сложных типов необходимо продемонстрировать использование не менее двух видов модельных групп (sequence, choice и all)-->
+                            <xs:element name="cltp_name" type="xs:string" />
+                            <xs:element name="cltp_desc" type="xs:string" />
+                        </xs:all>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="cl_type" type="xs:string" />
+            </xs:choice>
+            <xs:element name="client_param"> <!--3. При этом должен быть хотя бы один сложный тип, хотя бы один вложенный элемент которого был бы также сложного типа;-->
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="param" maxOccurs="unbounded">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="p_name" type="tns:clParam" />
+                                    <xs:element name="p_value" type="xs:string" />
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="client_requiset"><!--3. При этом должен быть хотя бы один сложный тип, хотя бы один вложенный элемент которого был бы также сложного типа;-->
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="req" maxOccurs="unbounded"> <!--3. При описании сложных типов необходимо продемонстрировать использование не менее двух видов модельных групп (sequence, choice и all)-->
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="req_name" type="tns:clReq" />
+                                    <xs:element name="req_value" type="xs:string" />
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="document">
+                <xs:complexType>
+                    <xs:attribute name="image" type="xs:string" use="required" />
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="cl_status">
+                <xs:complexType>
+                    <xs:attribute name="param" type="xs:string" default="A" />
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="acc_list" type="tns:accListType" />
+        </xs:sequence>
+        <xs:attribute name="clid" type="xs:string" />
+    </xs:complexType>
+
+    <xs:complexType name="accListType">
+        <xs:sequence>
+            <xs:element name="account" type="tns:accType"  maxOccurs="unbounded">
+                <xs:key name="accid"><!--7. Схема должна содержать описание ограничения уникальности, ключа и ссылки на ключ, применение чего должно иметь смысл в предметной области-->
+                    <xs:selector xpath="acc" />
+                    <xs:field xpath="@accid" />
+                </xs:key>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="accType">
+        <xs:sequence>
+            <xs:element name="acc_dadd" type="xs:dateTime" />
+            <xs:choice><!--3. При описании сложных типов необходимо продемонстрировать использование не менее двух видов модельных групп (sequence, choice и all)-->
+                <xs:element name="ac_type">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="actp_name" type="xs:string" />
+                            <xs:element name="actp_desc" type="xs:string" />
+                            <xs:element name="a_p" type="xs:string"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="acc_type" type="xs:string" />
+            </xs:choice>
+            <xs:element name="acc_clid">
+                <xs:complexType>
+                    <xs:attribute name="clid" type="xs:string" />
+                </xs:complexType>
+                <xs:keyref name="acclid" refer="tns:clid"><!--7. Схема должна содержать описание ограничения уникальности, ключа и ссылки на ключ, применение чего должно иметь смысл в предметной области-->
+                    <xs:selector xpath="acc_clid" />
+                    <xs:field xpath="@clid" />
+                </xs:keyref>
+            </xs:element>
+            <xs:element name="balance" type="tns:sumType" />
+            <xs:element name="balance_free" type="tns:sumType" />
+            <xs:element name="hold" type="tns:sumType" />
+        </xs:sequence>
+        <xs:attribute name="accid" type="xs:ID" />
+    </xs:complexType>
+
+    <xs:complexType name="transactionsType">
+        <xs:sequence>
+            <xs:element name="transaction" type="tns:transactionType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="transactionType">
+        <xs:sequence>
+            <xs:element name="tran_dadd" type="xs:dateTime"/>
+            <xs:choice>
+                <xs:element name="tran_type">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="trtp_name" type="xs:string"/>
+                            <xs:element name="trtp_desc" type="xs:string"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="tr_type" type="xs:string"/>
+            </xs:choice>
+            <xs:element name="acc_sender">
+                <xs:complexType>
+                    <xs:attribute name="accids" type="xs:IDREF"/>
+                </xs:complexType>
+                <xs:keyref name="accids" refer="tns:accid"><!--7. Схема должна содержать описание ограничения уникальности, ключа и ссылки на ключ, применение чего должно иметь смысл в предметной области-->
+                    <xs:selector xpath="acc_sender"/>
+                    <xs:field xpath="acсid"/>
+                </xs:keyref>
+            </xs:element>
+            <xs:element name="acc_recip">
+                <xs:complexType>
+                    <xs:attribute name="accidr" type="xs:IDREF"/>
+                </xs:complexType>
+                <xs:keyref name="accidr" refer="tns:accid"><!--7. Схема должна содержать описание ограничения уникальности, ключа и ссылки на ключ, применение чего должно иметь смысл в предметной области-->
+                    <xs:selector xpath="acc_recip"/>
+                    <xs:field xpath="accid_r"/>
+                </xs:keyref>
+            </xs:element>
+            <xs:element name="model">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="clid" type="xs:string"/>
+                        <xs:element name="sum" type="tns:sumType"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="status" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute name="tranid" type="xs:string"/>
+    </xs:complexType>
+</xs:schema>
